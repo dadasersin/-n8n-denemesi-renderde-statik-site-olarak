@@ -1,19 +1,15 @@
-
-export interface AnalysisResult {
-  explanation: string;
-  solution: string;
-  files: GeneratedFile[];
+export interface Step {
+  id: number;
+  title: string;
+  description: string;
+  code?: string;
+  fileName?: string;
+  tips?: string[];
 }
 
-export interface GeneratedFile {
-  name: string;
-  language: string;
-  content: string;
-}
-
-export enum Status {
-  IDLE = 'IDLE',
-  LOADING = 'LOADING',
-  SUCCESS = 'SUCCESS',
-  ERROR = 'ERROR'
+export enum TabType {
+  Guide = 'guide',
+  Render = 'render',
+  AIAssistant = 'ai-assistant',
+  Workflows = 'workflows'
 }

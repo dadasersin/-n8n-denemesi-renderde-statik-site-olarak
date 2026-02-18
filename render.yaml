@@ -1,0 +1,6 @@
+services:
+  - type: static
+    name: n8n-deployer-guide
+    env: static
+    buildCommand: npm install && npm run build
+    publishPath: build
