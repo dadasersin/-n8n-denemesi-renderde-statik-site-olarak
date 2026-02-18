@@ -1,3 +1,4 @@
+
 export interface Step {
   id: number;
   title: string;
@@ -11,5 +12,5 @@ export enum TabType {
   Guide = 'guide',
   Render = 'render',
   AIAssistant = 'ai-assistant',
-  Workflows = 'workflows'
+  GithubSync = 'github-sync'
 }
