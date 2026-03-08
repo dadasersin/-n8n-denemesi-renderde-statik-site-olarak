@@ -1,6 +1,45 @@
 services:
-  - type: static
-    name: n8n-deployer-guide
-    env: static
-    buildCommand: npm install && npm run build
-    publishPath: build
+  - type: web
+    name: n8n
+    env: docker
+    plan: free
+    region: oregon
+    healthCheckPath: /healthz
+    numInstances: 1
+    disk:
+      name: n8n_data
+      mountPath: /home/node/.n8n
+      sizeGB: 1
+    envVars:
+      - key: N8N_PORT
+        value: 5678
+      - key: DB_TYPE
+        value: postgresdb
+      - key: DB_POSTGRESDB_DATABASE
+        fromDatabase:
+          name: n8n_db
+          property: database
+      - key: DB_POSTGRESDB_HOST
+        fromDatabase:
+          name: n8n_db
+          property: host
+      - key: DB_POSTGRESDB_PORT
+        fromDatabase:
+          name: n8n_db
+          property: port
+      - key: DB_POSTGRESDB_USER
+        fromDatabase:
+          name: n8n_db
+          property: user
+      - key: DB_POSTGRESDB_PASSWORD
+        fromDatabase:
+          name: n8n_db
+          property: password
+      - key: N8N_ENCRYPTION_KEY
+        generateValue: true
+
+databases:
+  - name: n8n_db
+    plan: free
+    region: oregon
+    postgresMajorVersion: 15

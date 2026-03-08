@@ -1,20 +1,26 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# n8n for Render
 
-# Run and deploy your AI Studio app
+This repository contains the configuration to deploy n8n to [Render](https://render.com) using Docker, with a managed PostgreSQL database and persistent disk storage.
 
-This contains everything you need to run your app locally.
+## Deployment Instructions
 
-View your app in AI Studio: https://ai.studio/apps/drive/1wToCOGsTSGKDAt8JJU6xy6HlgkfkdWYA
+1.  **Fork this repository** to your GitHub account.
+2.  **Log in to Render** and go to the [Dashboard](https://dashboard.render.com).
+3.  Click **New +** and select **Blueprint**.
+4.  Connect your forked repository.
+5.  Render will automatically detect the `render.yaml` file and propose to create:
+    *   A **Web Service** (n8n)
+    *   A **PostgreSQL Database** (n8n_db)
+    *   A **Disk** (n8n_data)
+6.  Click **Apply**.
 
-## Run Locally
+## Configuration
 
-**Prerequisites:**  Node.js
+The setup includes:
+- **Base Image**: `n8nio/n8n:latest`
+- **Pre-installed tools**: `curl`, `python3`, `bash` (for use in n8n workflows).
+- **Persistence**: Workflows and settings are stored in the PostgreSQL database, while binary data and other local files are stored on the 1GB persistent disk.
+- **Auto-Scale**: Set to 1 instance on the Free plan by default.
 
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Note on Free Tier
+Render's Free Tier web services spin down after 15 minutes of inactivity. For production n8n use, consider upgrading to a paid plan or using a keep-alive workflow to prevent sleeping.
